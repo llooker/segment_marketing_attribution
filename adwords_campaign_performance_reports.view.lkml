@@ -1,5 +1,5 @@
 view: adwords_campaign_performance_reports {
-  sql_table_name: adwords.campaign_performance_reports ;;
+  sql_table_name: GOOGLE.campaign_performance_reports ;;
 
   dimension: id {
     primary_key: yes
@@ -9,13 +9,13 @@ view: adwords_campaign_performance_reports {
   }
 
   filter: campaign_select {
-    suggest_dimension: campaigns.name
+    suggest_dimension: adwords_campaigns.name
   }
 
   dimension: campaign_comparitor {
     type: string
-    sql: CASE WHEN {% condition campaign_select %} ${campaigns.name} {% endcondition %}
-      THEN ${campaigns.name}
+    sql: CASE WHEN {% condition campaign_select %} ${adwords_campaigns.name} {% endcondition %}
+      THEN ${adwords_campaigns.name}
       ELSE 'Rest Of Population'
       END ;;
   }
@@ -47,7 +47,7 @@ view: adwords_campaign_performance_reports {
   measure: total_campaigns {
     type: count_distinct
     sql: ${campaign_id} ;;
-    drill_fields: [campaigns.name, total_cost]
+    drill_fields: [adwords_campaigns.name, total_cost]
   }
 
   dimension: uuid {
@@ -59,7 +59,7 @@ view: adwords_campaign_performance_reports {
 
   measure: count {
     type: count
-    drill_fields: [id, campaigns.id, campaigns.name]
+    drill_fields: [id, adwords_campaigns.id, adwords_campaigns.name]
   }
 
 ##### Time Dimensions #####

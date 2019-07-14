@@ -5,6 +5,8 @@ view: page_facts {
        e.event_id AS event_id
       ,e.looker_visitor_id
       ,e.timestamp
+      ,e.campaign_source
+      ,e.campaign_name
       ,CASE
           WHEN timestampdiff(second, e.timestamp, LEAD(e.timestamp) OVER(PARTITION BY e.looker_visitor_id ORDER BY e.timestamp)) > 30*60 THEN NULL
           ELSE timestampdiff(second, e.timestamp, LEAD(e.timestamp) OVER(PARTITION BY e.looker_visitor_id ORDER BY e.timestamp)) END AS lead_idle_time_condition

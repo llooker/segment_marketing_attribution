@@ -68,8 +68,25 @@ view: event_facts {
     sql: ${TABLE}.source_sequence_number ;;
   }
 
+  dimension: session_campaign_name {}
+
+  dimension: event_source {
+    type: string
+    sql: ${TABLE}.event_source ;;
+  }
+
   measure: count_visitors {
     type: count_distinct
     sql: ${looker_visitor_id} ;;
+  }
+
+  measure: session_count {
+    type: count_distinct
+    sql: ${session_id} ;;
+  }
+
+  measure: event_count {
+    type: count_distinct
+    sql: ${event_id} ;;
   }
 }

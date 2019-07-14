@@ -78,6 +78,9 @@ view: mapped_events {
     type: number
     sql: ${TABLE}.idle_time_minutes ;;
   }
+  measure: count {
+    type: count
+  }
 
   set: detail {
     fields: [

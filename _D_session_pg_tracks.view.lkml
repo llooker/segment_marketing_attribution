@@ -5,10 +5,12 @@ view: sessions_pg_trk {
        cast(row_number() over(partition by looker_visitor_id order by timestamp) AS string) || ' - ' ||  looker_visitor_id as session_id
       ,looker_visitor_id
       ,timestamp as session_start_at
+      , MAX(campaign_name) AS session_campaign_name
       ,row_number() over(partition by looker_visitor_id order by timestamp) as session_sequence_number
       ,lead(timestamp) over(partition by looker_visitor_id order by timestamp) as next_session_start_at
 from ${mapped_events.SQL_TABLE_NAME}
-where (idle_time_minutes > 30 or idle_time_minutes is null)
+where (idle_time_minutes > 60000 or idle_time_minutes is null)
+GROUP BY 2,3
  ;;
   }
 
@@ -35,6 +37,11 @@ where (idle_time_minutes > 30 or idle_time_minutes is null)
 
   dimension: next_session_start_at {
     sql: ${TABLE}.next_session_start_at ;;
+  }
+
+  dimension: session_campaign_name {
+    type: string
+    sql: ${TABLE}.session_campaign_name ;;
   }
 
   dimension: is_first_session {

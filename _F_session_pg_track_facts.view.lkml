@@ -117,7 +117,7 @@ view: session_pg_trk_facts {
     sql: ${tracks_count}::float ;;
   }
 
-  measure: pruchase_session_count {
+  measure: purchase_session_count {
     type: count_distinct
     sql: ${session_id} ;;
     filters: {

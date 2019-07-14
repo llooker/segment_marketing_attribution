@@ -3,24 +3,15 @@ connection: "looker_blocks"
 # include all views in this project
 include: "*.view"
 
-# explore: pages {
-#   join: mapped_campaigns {
-#     sql_on: ${pages.context_campaign_source} = ${mapped_campaigns.source} ;;
-#     relationship: many_to_one
-#   }
-# }
+explore: session_campaign_mapping {
+  fields: [ALL_FIELDS*, -session_pg_trk_facts.session_duration_minutes, -session_pg_trk_facts.avg_session_duration_minutes]
+  join: session_pg_trk_facts {
+    sql_on: ${session_campaign_mapping.session_id} = ${session_pg_trk_facts.session_id} ;;
+    relationship: one_to_one
+  }
+}
 
-# explore: facebook_campaigns {
-#   join: pages {
-#     sql_on: ${facebook_campaigns.name} = ${pages.context_campaign_name} ;;
-#   }
-# }
-
-# explore: adwords_campaigns {
-#   join: pages {
-#     sql_on: ${adwords_campaigns.name} = ${pages.context_campaign_name} ;;
-#   }
-# }
+explore: mapped_events {}
 
 explore: event_facts {
   view_label: "Events"
