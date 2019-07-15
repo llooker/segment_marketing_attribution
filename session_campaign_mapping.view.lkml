@@ -9,7 +9,7 @@ view: session_campaign_mapping {
         event_facts.looker_visitor_id  AS looker_visitor_id,
         pages.context_campaign_name  AS "pages.context_campaign_name",
         pages.context_campaign_source  AS "pages.context_campaign_source",
-        session_pg_trk_facts.session_id  AS "session_pg_trk_facts.session_id",
+        sessions_pg_trk.session_id  AS "sessions_pg_trk.session_id",
         row_number() over(partition by event_facts.looker_visitor_id order by pages.timestamp) as session_sequence_number
       FROM ${event_facts.SQL_TABLE_NAME} AS event_facts
       LEFT JOIN WEB_PROD.PAGES  AS pages ON event_facts.timestamp = pages.timestamp
@@ -17,7 +17,7 @@ view: session_campaign_mapping {
 
       LEFT JOIN ${sessions_pg_trk.SQL_TABLE_NAME} AS sessions_pg_trk ON event_facts.session_id = sessions_pg_trk.session_id
         AND pages.timestamp = sessions_pg_trk.session_start_at
-      LEFT JOIN ${session_pg_trk_facts.SQL_TABLE_NAME} AS session_pg_trk_facts ON event_facts.session_id = session_pg_trk_facts.session_id
+
 
       WHERE (event_facts.event_source = 'pages')
       GROUP BY 1,2,3,4,5,6,7
@@ -67,7 +67,7 @@ view: session_campaign_mapping {
   dimension: session_id {
     primary_key: yes
     type: string
-    sql: ${TABLE}."session_pg_trk_facts.session_id" ;;
+    sql: ${TABLE}."sessions_pg_trk.session_id" ;;
   }
 
   dimension: looker_visitor_id {
