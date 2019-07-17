@@ -36,7 +36,7 @@ view: tracks {
 
   dimension_group: timestamp {
     type: time
-    hidden: yes
+#     hidden: yes
     timeframes: [raw, time, date, week, month]
     sql: ${TABLE}.timestamp ;;
   }
@@ -48,7 +48,7 @@ view: tracks {
 
   measure: count {
     type: count
-    drill_fields: [id, users.context_library_name, users.id]
+    drill_fields: [id, timestamp_time, event]
   }
 }
 

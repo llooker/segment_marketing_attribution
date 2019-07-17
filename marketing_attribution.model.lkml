@@ -9,9 +9,12 @@ explore: session_campaign_mapping {
     sql_on: ${session_campaign_mapping.session_id} = ${session_pg_trk_facts.session_id} ;;
     relationship: one_to_one
   }
-}
 
-explore: mapped_events {}
+  join: user_campaign_facts {
+    sql_on: ${session_campaign_mapping.session_id} = ${user_campaign_facts.session_id} ;;
+    relationship: one_to_one
+  }
+}
 
 explore: event_facts {
   view_label: "Events"
