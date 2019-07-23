@@ -1,5 +1,5 @@
 view: pages {
-  sql_table_name: WEB_PROD.PAGES ;;
+  sql_table_name: WEBSITE.PAGES ;;
 
   dimension: id {
     primary_key: yes

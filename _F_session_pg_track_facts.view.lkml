@@ -6,6 +6,8 @@ view: session_pg_trk_facts {
         --, first_referrer
         , max(t2s.timestamp) as end_at
         , count(case when t2s.event_source = 'tracks' then 1 else null end) as tracks_count
+        , sum(case when t2s.event = 'product_viewed' then 1 else null end) as cnt_product_viewed
+        , sum(case when t2s.event = 'product_added' then 1 else null end) as cnt_product_added
         , sum(case when t2s.event = 'order_completed' then 1 else null end) as cnt_order_completed
       from ${sessions_pg_trk.SQL_TABLE_NAME} as s
         inner join ${event_facts.SQL_TABLE_NAME} as t2s
@@ -93,6 +95,18 @@ view: session_pg_trk_facts {
     sql: ${TABLE}.cnt_order_completed ;;
   }
 
+  dimension: cnt_product_viewed {
+    type: number
+    hidden: yes
+    sql: ${TABLE}.cnt_product_viewed ;;
+  }
+
+  dimension: cnt_product_added {
+    type: number
+    hidden: yes
+    sql: ${TABLE}.cnt_product_added ;;
+  }
+
   dimension: is_purchase_event {
     type: yesno
     sql: ${cnt_order_completed} > 0 ;;
@@ -125,5 +139,24 @@ view: session_pg_trk_facts {
       value: "Yes"
     }
   }
+
+  measure: product_view_session_count {
+    type: count_distinct
+    sql: ${session_id} ;;
+    filters: {
+      field: cnt_product_viewed
+      value: ">0"
+    }
+  }
+
+  measure: product_add_session_count {
+    type: count_distinct
+    sql: ${session_id} ;;
+    filters: {
+      field: cnt_product_added
+      value: ">0"
+    }
+  }
+
 
 }

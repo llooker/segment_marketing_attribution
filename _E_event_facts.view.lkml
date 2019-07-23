@@ -88,5 +88,6 @@ view: event_facts {
   measure: event_count {
     type: count_distinct
     sql: ${event_id} ;;
+    drill_fields: [event_id, event]
   }
 }

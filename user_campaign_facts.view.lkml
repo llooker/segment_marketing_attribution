@@ -1,16 +1,17 @@
 view: user_campaign_facts {
   derived_table: {
-    sql: -- use existing session_campaign_mapping in LOOKER_SCRATCH.LR$9YITOYWRVFE8TH6UEPEPF_session_campaign_mapping
+    sql:
       SELECT
         session_campaign_mapping.looker_visitor_id  AS looker_visitor_id,
         session_campaign_mapping."session_id"  AS session_id,
-        first_value("context_campaign_name") OVER (partition by looker_visitor_id order by session_campaign_mapping."session_id" asc) as first_campaign,
-        COALESCE("context_campaign_name", lag("context_campaign_name") IGNORE NULLS OVER (partition by looker_visitor_id order by session_campaign_mapping."session_id" asc), "context_campaign_name") as previous_campaign,
-        first_value("context_campaign_source") OVER (partition by looker_visitor_id order by session_campaign_mapping."session_id" asc) as first_campaign_source,
-        COALESCE("context_campaign_source", lag("context_campaign_source") IGNORE NULLS OVER (partition by looker_visitor_id order by session_campaign_mapping."session_id" asc), "context_campaign_source") as previous_campaign_source
+        lag("session_id") OVER (partition by looker_visitor_id order by session_campaign_mapping."session_id" asc) as previous_session_id,
+        first_value("context_campaign_name") OVER (partition by looker_visitor_id order by session_campaign_mapping."session_id" desc) as first_campaign,
+        COALESCE("context_campaign_name", lag("context_campaign_name") IGNORE NULLS OVER (partition by looker_visitor_id order by session_campaign_mapping."session_id" desc), "context_campaign_name") as previous_campaign,
+        first_value("context_campaign_source") OVER (partition by looker_visitor_id order by session_campaign_mapping."session_id" desc) as first_campaign_source,
+        COALESCE("context_campaign_source", lag("context_campaign_source") IGNORE NULLS OVER (partition by looker_visitor_id order by session_campaign_mapping."session_id" desc), "context_campaign_source") as previous_campaign_source
       FROM ${session_campaign_mapping.SQL_TABLE_NAME} AS session_campaign_mapping
 
-      ORDER BY 1,2
+      ORDER BY 1,2,3
        ;;
   }
 
@@ -47,6 +48,11 @@ view: user_campaign_facts {
   dimension: previous_campaign_source {
     type: string
     sql: ${TABLE}."PREVIOUS_CAMPAIGN_SOURCE" ;;
+  }
+
+  dimension: previous_session_id {
+    type: string
+    sql: ${TABLE}."PREVIOUS_SESSION_ID" ;;
   }
 
   set: detail {
