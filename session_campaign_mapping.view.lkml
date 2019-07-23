@@ -8,6 +8,7 @@ view: session_campaign_mapping {
         max(sessions_pg_trk.session_start_at) AS "start_time",
         max(pages.context_campaign_name) "context_campaign_name",
         max(pages.context_campaign_source) AS "context_campaign_source",
+        SUM(order_completed.revenue) AS session_revenue,
         ROW_NUMBER() OVER (PARTITION BY event_facts.looker_visitor_id ORDER BY event_facts.session_id ASC) AS session_sequence_number
       FROM ${event_facts.SQL_TABLE_NAME} AS event_facts
       LEFT JOIN WEBSITE.PAGES  AS pages ON event_facts.timestamp = pages.timestamp
@@ -15,6 +16,10 @@ view: session_campaign_mapping {
 
       LEFT JOIN ${sessions_pg_trk.SQL_TABLE_NAME} AS sessions_pg_trk ON event_facts.session_id = sessions_pg_trk.session_id
         AND event_facts.timestamp = sessions_pg_trk.session_start_at
+
+      LEFT JOIN WEBSITE.ORDER_COMPLETED as order_completed
+        ON event_facts.anonymous_id = order_completed.anonymous_id
+        AND event_facts.timestamp = order_completed.timestamp
 
       GROUP BY 1,2 ;;
   }
@@ -59,6 +64,16 @@ view: session_campaign_mapping {
   dimension: looker_visitor_id {
     type: string
     sql: ${TABLE}.looker_visitor_id ;;
+  }
+
+  dimension: session_revenue {
+    type: number
+    sql: ${TABLE}.session_revenue ;;
+  }
+
+  measure: total_session_revenue {
+    type: sum
+    sql: ${session_revenue} ;;
   }
 
   measure: visitor_count {

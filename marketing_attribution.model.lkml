@@ -2,6 +2,7 @@ connection: "looker_blocks"
 
 # include all views in this project
 include: "*.view"
+explore: order_completed {}
 
 explore: session_campaign_mapping {
   fields: [ALL_FIELDS*, -session_pg_trk_facts.session_duration_minutes, -session_pg_trk_facts.avg_session_duration_minutes]
