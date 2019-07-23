@@ -15,6 +15,22 @@ view: user_campaign_facts {
        ;;
   }
 
+  parameter: attribution_method {
+    allowed_value: {value: "First Touch"}
+    allowed_value: {value: "Last Touch"}
+    default_value: "Last Touch"
+  }
+
+  dimension: attribution {
+    type: string
+    sql:
+      CASE
+        WHEN {% parameter attribution_method %} = 'First Touch' THEN ${first_campaign}
+        WHEN {% parameter attribution_method %} = 'Last Touch' THEN ${previous_campaign}
+        ELSE NULL
+      END ;;
+  }
+
   measure: count {
     type: count
     drill_fields: [detail*]

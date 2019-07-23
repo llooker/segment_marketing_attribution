@@ -24,6 +24,22 @@ view: session_campaign_mapping {
       GROUP BY 1,2 ;;
   }
 
+  parameter: conversion_metric_selector {
+    allowed_value: {value:"Revenue"}
+    allowed_value: {value:"Count"}
+    default_value: "Count"
+  }
+
+  measure: conversion_metrics {
+    type: number
+    sql:
+      CASE
+        WHEN {% parameter conversion_metric_selector %} = 'Revenue' THEN ${total_session_revenue}
+        WHEN {% parameter conversion_metric_selector %} = 'Count' THEN ${session_pg_trk_facts.purchase_session_count}
+        ELSE NULL
+      END ;;
+  }
+
   measure: count {
     type: count
     drill_fields: [detail*]
