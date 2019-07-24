@@ -70,22 +70,22 @@ view: user_campaign_facts {
 
   dimension: first_campaign {
     type: string
-    sql: ${TABLE}."FIRST_CAMPAIGN" ;;
+    sql: COALESCE(INITCAP(${TABLE}."FIRST_CAMPAIGN"),'Organic') ;;
   }
 
   dimension: previous_campaign {
     type: string
-    sql: ${TABLE}."PREVIOUS_CAMPAIGN" ;;
+    sql: COALESCE(INITCAP(${TABLE}."PREVIOUS_CAMPAIGN"),'Organic') ;;
   }
 
   dimension: first_campaign_source {
     type: string
-    sql: ${TABLE}."FIRST_CAMPAIGN_SOURCE" ;;
+    sql: COALESCE(INITCAP(${TABLE}."FIRST_CAMPAIGN_SOURCE"), 'Organic') ;;
   }
 
   dimension: previous_campaign_source {
     type: string
-    sql: ${TABLE}."PREVIOUS_CAMPAIGN_SOURCE" ;;
+    sql: COALESCE(INITCAP(${TABLE}."PREVIOUS_CAMPAIGN_SOURCE"),'Organic') ;;
   }
 
   dimension: previous_session_id {

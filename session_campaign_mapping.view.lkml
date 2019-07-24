@@ -25,8 +25,8 @@ view: session_campaign_mapping {
   }
 
   parameter: conversion_metric_selector {
-    allowed_value: {value:"Revenue"}
-    allowed_value: {value:"Count"}
+    allowed_value: {value:"Revenue" label: "Revenue"}
+    allowed_value: {value:"Count" label: "Conversion Count"}
     default_value: "Count"
   }
 
@@ -55,20 +55,14 @@ view: session_campaign_mapping {
     sql: ${TABLE}."start_time" ;;
   }
 
-  dimension: event_source {
-    type: string
-    hidden: yes
-    sql: ${TABLE}."event_source" ;;
-  }
-
   dimension: campaign_name {
     type: string
-    sql: ${TABLE}."context_campaign_name" ;;
+    sql: COALESCE(INITCAP(${TABLE}."context_campaign_name"),'Organic') ;;
   }
 
   dimension: campaign_source {
     type: string
-    sql: ${TABLE}."context_campaign_source" ;;
+    sql: COALESCE(INITCAP(${TABLE}."context_campaign_source"),'Organic') ;;
   }
 
   dimension: session_id {
@@ -90,11 +84,13 @@ view: session_campaign_mapping {
   measure: total_session_revenue {
     type: sum
     sql: ${session_revenue} ;;
+    drill_fields: [detail*]
   }
 
   measure: visitor_count {
     type: count_distinct
     sql: ${looker_visitor_id} ;;
+    drill_fields: [detail*]
   }
 
   measure: purchases_attributed_to_facebook {
@@ -142,15 +138,17 @@ view: session_campaign_mapping {
   measure: session_count {
     type: count_distinct
     sql: ${session_id} ;;
+    drill_fields: [detail*]
   }
 
   set: detail {
     fields: [
       session_start_time,
-      event_source,
       campaign_name,
       campaign_source,
-      session_id
+      session_id,
+      user_campaign_facts.first_campaign,
+      user_campaign_facts.first_campaign_source
     ]
   }
 }
