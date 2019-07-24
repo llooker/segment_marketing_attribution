@@ -98,7 +98,7 @@ view: session_campaign_mapping {
     sql: ${session_pg_trk_facts.session_id} ;;
     filters: {
       field: user_campaign_facts.previous_campaign_source
-      value: "facebook"
+      value: "Facebook"
     }
     filters: {
       field: session_pg_trk_facts.is_purchase_event
@@ -112,7 +112,7 @@ view: session_campaign_mapping {
     sql: ${session_pg_trk_facts.session_id} ;;
     filters: {
       field: user_campaign_facts.previous_campaign_source
-      value: "google"
+      value: "Google"
     }
     filters: {
       field: session_pg_trk_facts.is_purchase_event
