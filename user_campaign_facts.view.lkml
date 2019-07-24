@@ -4,14 +4,16 @@ view: user_campaign_facts {
       SELECT
         session_campaign_mapping.looker_visitor_id  AS looker_visitor_id,
         session_campaign_mapping."session_id"  AS session_id,
+        "start_time" as session_start_time,
         lag("session_id") OVER (partition by looker_visitor_id order by session_campaign_mapping."session_id" asc) as previous_session_id,
+        first_value("start_time") OVER (partition by looker_visitor_id order by session_campaign_mapping."session_id" desc) as acquisition_time,
         first_value("context_campaign_name") OVER (partition by looker_visitor_id order by session_campaign_mapping."session_id" desc) as first_campaign,
         COALESCE("context_campaign_name", lag("context_campaign_name") IGNORE NULLS OVER (partition by looker_visitor_id order by session_campaign_mapping."session_id" desc), "context_campaign_name") as previous_campaign,
         first_value("context_campaign_source") OVER (partition by looker_visitor_id order by session_campaign_mapping."session_id" desc) as first_campaign_source,
         COALESCE("context_campaign_source", lag("context_campaign_source") IGNORE NULLS OVER (partition by looker_visitor_id order by session_campaign_mapping."session_id" desc), "context_campaign_source") as previous_campaign_source
       FROM ${session_campaign_mapping.SQL_TABLE_NAME} AS session_campaign_mapping
 
-      ORDER BY 1,2,3
+      ORDER BY 1,2,3,4
        ;;
   }
 
@@ -31,6 +33,16 @@ view: user_campaign_facts {
       END ;;
   }
 
+  dimension: attribution_channel {
+    type: string
+    sql:
+      CASE
+        WHEN {% parameter attribution_method %} = 'First Touch' THEN ${first_campaign_source}
+        WHEN {% parameter attribution_method %} = 'Last Touch' THEN ${previous_campaign_source}
+        ELSE NULL
+      END ;;
+  }
+
   measure: count {
     type: count
     drill_fields: [detail*]
@@ -44,6 +56,16 @@ view: user_campaign_facts {
   dimension: session_id {
     type: string
     sql: ${TABLE}."SESSION_ID" ;;
+  }
+
+  dimension_group: acquisition {
+    type: time
+    sql: ${TABLE}.acquisition_time ;;
+  }
+
+  dimension: days_since_acquisition {
+    type: number
+    sql: timestampdiff(day,${session_campaign_mapping.session_start_raw},${acquisition_raw}) ;;
   }
 
   dimension: first_campaign {
