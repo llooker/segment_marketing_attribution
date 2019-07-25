@@ -81,6 +81,11 @@ view: session_campaign_mapping {
     sql: ${TABLE}.session_revenue ;;
   }
 
+  dimension: is_purchase_session {
+    type: yesno
+    sql: ${session_revenue} > 0 ;;
+  }
+
   measure: total_session_revenue {
     type: sum
     sql: ${session_revenue} ;;
@@ -90,6 +95,34 @@ view: session_campaign_mapping {
   measure: visitor_count {
     type: count_distinct
     sql: ${looker_visitor_id} ;;
+    drill_fields: [detail*]
+  }
+
+  measure: revenue_attributed_to_facebook {
+    type: sum
+    sql: ${session_revenue} ;;
+    filters: {
+      field: user_campaign_facts.attribution_channel
+      value: "Facebook"
+    }
+    filters: {
+      field: session_pg_trk_facts.is_purchase_event
+      value: "Yes"
+    }
+    drill_fields: [detail*]
+  }
+
+  measure: revenue_attributed_to_google {
+    type: sum
+    sql: ${session_revenue} ;;
+    filters: {
+      field: user_campaign_facts.attribution_channel
+      value: "Google"
+    }
+    filters: {
+      field: session_pg_trk_facts.is_purchase_event
+      value: "Yes"
+    }
     drill_fields: [detail*]
   }
 
@@ -133,6 +166,18 @@ view: session_campaign_mapping {
       value: "Yes"
     }
     drill_fields: [detail*]
+  }
+
+  measure: facebook_revenue_per_purchase {
+    type: number
+    sql: ${revenue_attributed_to_facebook} / ${purchases_attributed_to_facebook} ;;
+    value_format_name: usd
+  }
+
+  measure: google_revenue_per_purchase {
+    type: number
+    sql: ${revenue_attributed_to_google} / ${purchases_attributed_to_google} ;;
+    value_format_name: usd
   }
 
   measure: session_count {

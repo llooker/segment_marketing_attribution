@@ -5,6 +5,7 @@ view: user_campaign_facts {
         session_campaign_mapping.looker_visitor_id  AS looker_visitor_id,
         session_campaign_mapping."session_id"  AS session_id,
         "start_time" as session_start_time,
+        session_sequence_number as session_sequence_number,
         lag("session_id") OVER (partition by looker_visitor_id order by session_campaign_mapping."session_id" asc) as previous_session_id,
         first_value("start_time") OVER (partition by looker_visitor_id order by session_campaign_mapping."session_id" desc) as acquisition_time,
         first_value("context_campaign_name") OVER (partition by looker_visitor_id order by session_campaign_mapping."session_id" desc) as first_campaign,
@@ -91,6 +92,11 @@ view: user_campaign_facts {
   dimension: previous_session_id {
     type: string
     sql: ${TABLE}."PREVIOUS_SESSION_ID" ;;
+  }
+
+  dimension: session_sequence_number {
+    type:number
+    sql: ${TABLE}.session_sequence_number ;;
   }
 
   set: detail {
