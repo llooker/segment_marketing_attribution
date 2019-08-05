@@ -89,7 +89,7 @@ view: adwords_campaign_performance_reports {
       quarter,
       year
     ]
-    hidden: yes
+#     hidden: yes
     sql: ${TABLE}.date_stop ;;
   }
 

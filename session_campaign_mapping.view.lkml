@@ -170,14 +170,19 @@ view: session_campaign_mapping {
 
   measure: facebook_revenue_per_purchase {
     type: number
-    sql: ${revenue_attributed_to_facebook} / ${purchases_attributed_to_facebook} ;;
+    sql: ${revenue_attributed_to_facebook} / NULLIF(${purchases_attributed_to_facebook},0) ;;
     value_format_name: usd
   }
 
   measure: google_revenue_per_purchase {
     type: number
-    sql: ${revenue_attributed_to_google} / ${purchases_attributed_to_google} ;;
+    sql: ${revenue_attributed_to_google} / NULLIF(${purchases_attributed_to_google},0) ;;
     value_format_name: usd
+  }
+
+  measure: revenue_pur_puchase {
+    type: number
+    sql: ${total_session_revenue} / NULLIF(${session_pg_trk_facts.purchase_session_count},0) ;;
   }
 
   measure: session_count {
