@@ -55,6 +55,7 @@ view: user_campaign_facts {
   }
 
   dimension: session_id {
+    group_label: "Session"
     type: string
     sql: ${TABLE}."SESSION_ID" ;;
   }
@@ -70,31 +71,37 @@ view: user_campaign_facts {
   }
 
   dimension: first_campaign {
+    group_label: "Campaign"
     type: string
     sql: COALESCE(INITCAP(${TABLE}."FIRST_CAMPAIGN"),'Organic') ;;
   }
 
   dimension: previous_campaign {
+    group_label: "Campaign"
     type: string
     sql: COALESCE(INITCAP(${TABLE}."PREVIOUS_CAMPAIGN"),'Organic') ;;
   }
 
   dimension: first_campaign_source {
+    group_label: "Campaign"
     type: string
     sql: COALESCE(INITCAP(${TABLE}."FIRST_CAMPAIGN_SOURCE"), 'Organic') ;;
   }
 
   dimension: previous_campaign_source {
+    group_label: "Campaign"
     type: string
     sql: COALESCE(INITCAP(${TABLE}."PREVIOUS_CAMPAIGN_SOURCE"),'Organic') ;;
   }
 
   dimension: previous_session_id {
+    group_label: "Session"
     type: string
     sql: ${TABLE}."PREVIOUS_SESSION_ID" ;;
   }
 
   dimension: session_sequence_number {
+    group_label: "Session"
     type:number
     sql: ${TABLE}.session_sequence_number ;;
   }

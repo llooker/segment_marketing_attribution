@@ -56,11 +56,13 @@ view: session_campaign_mapping {
   }
 
   dimension: campaign_name {
+    group_label: "Campaign"
     type: string
     sql: COALESCE(INITCAP(${TABLE}."context_campaign_name"),'Organic') ;;
   }
 
   dimension: campaign_source {
+    group_label: "Campaign"
     type: string
     sql: COALESCE(INITCAP(${TABLE}."context_campaign_source"),'Organic') ;;
   }
@@ -87,6 +89,7 @@ view: session_campaign_mapping {
   }
 
   measure: total_session_revenue {
+    group_label: "Revenue"
     type: sum
     sql: ${session_revenue} ;;
     drill_fields: [detail*]
@@ -99,6 +102,7 @@ view: session_campaign_mapping {
   }
 
   measure: revenue_attributed_to_facebook {
+    group_label: "Revenue"
     type: sum
     sql: ${session_revenue} ;;
     filters: {
@@ -113,6 +117,7 @@ view: session_campaign_mapping {
   }
 
   measure: revenue_attributed_to_google {
+    group_label: "Revenue"
     type: sum
     sql: ${session_revenue} ;;
     filters: {
@@ -127,6 +132,7 @@ view: session_campaign_mapping {
   }
 
   measure: purchases_attributed_to_facebook {
+    group_label: "Purchases"
     type: count_distinct
     sql: ${session_pg_trk_facts.session_id} ;;
     filters: {
@@ -141,6 +147,7 @@ view: session_campaign_mapping {
   }
 
   measure: purchases_attributed_to_google {
+    group_label: "Purchases"
     type: count_distinct
     sql: ${session_pg_trk_facts.session_id} ;;
     filters: {
@@ -155,6 +162,7 @@ view: session_campaign_mapping {
   }
 
   measure: purchases_attributed_to_email {
+    group_label: "Purchases"
     type: count_distinct
     sql: ${session_pg_trk_facts.session_id} ;;
     filters: {
@@ -169,18 +177,21 @@ view: session_campaign_mapping {
   }
 
   measure: facebook_revenue_per_purchase {
+    group_label: "Revenue"
     type: number
     sql: ${revenue_attributed_to_facebook} / NULLIF(${purchases_attributed_to_facebook},0) ;;
     value_format_name: usd
   }
 
   measure: google_revenue_per_purchase {
+    group_label: "Revenue"
     type: number
     sql: ${revenue_attributed_to_google} / NULLIF(${purchases_attributed_to_google},0) ;;
     value_format_name: usd
   }
 
-  measure: revenue_pur_puchase {
+  measure: revenue_per_puchase {
+    group_label: "Revenue"
     type: number
     sql: ${total_session_revenue} / NULLIF(${session_pg_trk_facts.purchase_session_count},0) ;;
   }

@@ -34,6 +34,7 @@ view: daily_campaign_spend {
   }
 
   dimension_group: date {
+    group_label: "Date"
     type: time
     sql: ${TABLE}."DATE" ;;
   }
@@ -75,6 +76,7 @@ view: daily_campaign_spend {
   measure: customer_acquisition_cost {
     type: number
     sql: ${total_cost} / NULLIF(${session_pg_trk_facts.purchase_session_count},0) ;;
+    drill_fields: [detail*]
   }
 
   set: detail {
