@@ -70,6 +70,3 @@ explore: facebook_insights {
     relationship: many_to_one
   }
 }
-
-## Facebook Ads and Google Adwords Comparison ##
-# explore: ads_compare {}
