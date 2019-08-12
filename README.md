@@ -1,8 +1,15 @@
 ### What does this block do for me?
 Marketing Attribution Block by Segment takes event tracking data and ties each user session to a campaign, allowing users to see which campaigns were most influencial in bringing on new users and revenue. In addition, users have the option to toggle between first touch (i.e. customer acquisition) and last touch (i.e. conversion) attribution to track the differences in campaigns that brought new users vs those that brought in revenue.
 
+**Note**: This Block is an extension of the [Event Analytics by Segment Block](https://looker.com/platform/blocks/source/event-analytics-by-segment). It specifically uses the ["Pages and Tracks"](https://github.com/llooker/segment_bigquery/blob/master/_5_applying_the_segment_block.md) version of the Block. Please refer to details in the [Event Analytics Block entry](https://github.com/llooker/segment_bigquery).
+
 ### Block Structure (Explores)
 * **Campaign Attribution**: The Campaign Attribution explore takes four distinct views - sessions, events, users, and spend - to provide a holistic view on campaign performance. This explore is an extension of the Event Analytics by Segment block, and is based on both the standard Segment web tracking schema (tracks, pages, etc.), as well as Facebook Ads and Google AdWords data piped in through Segment.
+
+### Block Structure (Views)
+* **session_campaign_mapping**: This view takes each session and assigns it a campaign and channel through which the session was entered, along with total revenue during each session.
+* **user_campaign_facts**: This view associates each visitor ID with a visitor's acquisition channel and campaign (i.e. first touch), and the campaign / channel that triggered any given user session's previous session (i.e. last touch).
+* **daily_campaign_spend**: This view standardizes campaign cost across channels (Google AdWords and Facebook Ads by default) as total spend by date.
 
 ### Required Customization
 
