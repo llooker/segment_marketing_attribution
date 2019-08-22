@@ -93,6 +93,7 @@ view: session_campaign_mapping {
     type: sum
     sql: ${session_revenue} ;;
     drill_fields: [detail*]
+    value_format_name: usd_0
   }
 
   measure: visitor_count {

@@ -140,6 +140,11 @@ view: session_pg_trk_facts {
     }
   }
 
+  measure: test {
+    type: number
+    sql: ${product_add_session_count} - ${purchase_session_count} ;;
+  }
+
   measure: product_view_session_count {
     type: count_distinct
     sql: ${session_id} ;;
