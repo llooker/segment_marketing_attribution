@@ -36,6 +36,7 @@ view: user_campaign_facts {
 
   dimension: attribution_channel {
     type: string
+    drill_fields: [first_campaign, previous_campaign]
     sql:
       CASE
         WHEN {% parameter attribution_method %} = 'First Touch' THEN ${first_campaign_source}
@@ -78,18 +79,22 @@ view: user_campaign_facts {
 
   dimension: previous_campaign {
     group_label: "Campaign"
+    label: "Last Campaign"
     type: string
     sql: COALESCE(INITCAP(${TABLE}."PREVIOUS_CAMPAIGN"),'Organic') ;;
   }
 
   dimension: first_campaign_source {
     group_label: "Campaign"
+    drill_fields: [first_campaign]
     type: string
     sql: COALESCE(INITCAP(${TABLE}."FIRST_CAMPAIGN_SOURCE"), 'Organic') ;;
   }
 
   dimension: previous_campaign_source {
     group_label: "Campaign"
+    label: "Last Campaign Source"
+    drill_fields: [previous_campaign]
     type: string
     sql: COALESCE(INITCAP(${TABLE}."PREVIOUS_CAMPAIGN_SOURCE"),'Organic') ;;
   }
@@ -107,6 +112,6 @@ view: user_campaign_facts {
   }
 
   set: detail {
-    fields: [looker_visitor_id, session_id, first_campaign, previous_campaign]
+    fields: [looker_visitor_id, session_id, attribution_channel, attribution]
   }
 }

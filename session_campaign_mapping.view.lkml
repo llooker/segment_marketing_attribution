@@ -32,6 +32,7 @@ view: session_campaign_mapping {
 
   measure: conversion_metrics {
     type: number
+    drill_fields: [detail*]
     sql:
       CASE
         WHEN {% parameter conversion_metric_selector %} = 'Revenue' THEN ${total_session_revenue}
@@ -56,15 +57,17 @@ view: session_campaign_mapping {
   }
 
   dimension: campaign_name {
-    group_label: "Campaign"
+    group_label: "Session Campaign"
     type: string
     sql: COALESCE(INITCAP(${TABLE}."context_campaign_name"),'Organic') ;;
   }
 
   dimension: campaign_source {
     group_label: "Campaign"
+    label: "Session Campaign Channel"
     type: string
     sql: COALESCE(INITCAP(${TABLE}."context_campaign_source"),'Organic') ;;
+    drill_fields: [campaign_name]
   }
 
   dimension: session_id {
@@ -181,6 +184,7 @@ view: session_campaign_mapping {
     group_label: "Revenue"
     type: number
     sql: ${revenue_attributed_to_facebook} / NULLIF(${purchases_attributed_to_facebook},0) ;;
+    drill_fields: [detail*]
     value_format_name: usd
   }
 
@@ -188,6 +192,7 @@ view: session_campaign_mapping {
     group_label: "Revenue"
     type: number
     sql: ${revenue_attributed_to_google} / NULLIF(${purchases_attributed_to_google},0) ;;
+    drill_fields: [detail*]
     value_format_name: usd
   }
 
@@ -195,6 +200,7 @@ view: session_campaign_mapping {
     group_label: "Revenue"
     type: number
     sql: ${total_session_revenue} / NULLIF(${session_pg_trk_facts.purchase_session_count},0) ;;
+    drill_fields: [detail*]
   }
 
   measure: session_count {
@@ -205,12 +211,9 @@ view: session_campaign_mapping {
 
   set: detail {
     fields: [
-      session_start_time,
-      campaign_name,
       campaign_source,
-      session_id,
-      user_campaign_facts.first_campaign,
-      user_campaign_facts.first_campaign_source
+      session_start_date,
+      total_session_revenue
     ]
   }
 }
