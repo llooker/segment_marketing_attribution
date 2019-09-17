@@ -537,7 +537,7 @@ view: adwords_ad_performance_reports {
   }
 
   set: details {
-    fields: [ad_id,ad_groups.name, ad_campasigns.name, cost, cost_per_click, total_impressions, total_clicks, total_conversions]
+    fields: [adwords_ad_groups.name, adwords_ad_campasigns.name, total_cost, total_impressions, total_clicks, total_conversions]
   }
 
 ##### Gmail #####
