@@ -1,4 +1,3 @@
-explore: order_completed {}
 view: order_completed {
   sql_table_name: WEBSITE.ORDER_COMPLETED ;;
 
