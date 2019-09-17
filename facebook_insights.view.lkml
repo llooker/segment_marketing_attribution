@@ -141,25 +141,25 @@ view: facebook_insights {
     type: sum
     sql: ${TABLE}.spend ;;
     value_format_name: usd
-    drill_fields: [campaigns.name, ads.name, spend]
+    drill_fields: [facebook_campaigns.name, facebook_ads.name, spend]
   }
 
   measure: unique_clicks {
     type: sum
     sql: ${TABLE}.unique_clicks ;;
-    drill_fields: [campaigns.name, ads.name, unique_clicks]
+    drill_fields: [facebook_campaigns.name, facebook_ads.name, unique_clicks]
   }
 
   measure: unique_impressions {
     type: sum
     sql: ${TABLE}.unique_impressions ;;
-    drill_fields: [campaigns.name, ads.name, unique_impressions]
+    drill_fields: [facebook_campaigns.name, facebook_ads.name, unique_impressions]
   }
 
   measure: unique_social_clicks {
     type: sum
     sql: ${TABLE}.unique_social_clicks ;;
-    drill_fields: [campaigns.name, ads.name, unique_social_clicks]
+    drill_fields: [facebook_campaigns.name, facebook_ads.name, unique_social_clicks]
   }
 
   dimension_group: uuid_ts {
@@ -179,20 +179,20 @@ view: facebook_insights {
   measure: website_clicks {
     type: sum
     sql: ${TABLE}.website_clicks ;;
-    drill_fields: [campaigns.name, ads.name, website_clicks]
+    drill_fields: [facebook_campaigns.name, facebook_ads.name, website_clicks]
   }
 
   measure: cost_per_click {
     type: number
     sql: ${spend}/NULLIF(${clicks},0) ;;
     value_format_name: usd
-    drill_fields: [campaigns.name, ads.name, cost_per_click]
+    drill_fields: [facebook_campaigns.name, facebook_ads.name, cost_per_click]
   }
 
   measure: click_through_rate {
     type: number
     sql: ${clicks}/NULLIF(${impressions},0) ;;
     value_format_name: percent_1
-    drill_fields: [campaigns.name, ads.name, click_through_rate]
+    drill_fields: [facebook_campaigns.name, facebook_ads.name, click_through_rate]
   }
 }
