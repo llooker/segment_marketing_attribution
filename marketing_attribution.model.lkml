@@ -2,6 +2,7 @@ connection: "looker_blocks"
 
 # include all views in this project
 include: "*.view"
+include: "*.dashboard"
 
 explore: session_campaign_mapping {
   label: "Campaign Attribution"

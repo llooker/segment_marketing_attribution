@@ -1,6 +1,6 @@
 ## Getting Started
 
-The database configuration process should follow the same logic as when [Configuring a BigQuery Database](https://docs.looker.com/setup-and-management/database-config/google-bigquery ). Customers can easily reference their warehouse credentials in the Connection tab of their Warehouse settings page:
+The database configuration process should follow the same logic as when [Configuring a Snowflake Database](https://docs.looker.com/setup-and-management/database-config/snowflake ). Customers can easily reference their warehouse credentials in the Connection tab of their Warehouse settings page:
 
 Ensure that the **Looker** user has:
 
