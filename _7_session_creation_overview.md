@@ -15,7 +15,7 @@ D. [**Event Facts**](_D_event_facts.view.lookml) - Maps events to session ids. T
 
 Looker Model - These individual files can be integrated in the [Pages Model File](pages.model.lookml). Event_id is NOT the primary key for Events, so joins must use multiple identifiers on required fields, like anonymous_id, received_at, and event_id. Also event_id may be called id, just swap the name.
 
-[:point_right:](_8_campaign_attribution_modeling.md) Continue to [Campaign Attribution](_8_campaign_attribution_modeling.md)
+[:point_right:](_8_campaign_attribution_modeling.md) Continue to [Campaign Attribution Method](_8_campaign_attribution_modeling.md)
 
 [:point_left:](_6_user_id_consolidation.md) Back to [User ID Consolidation](_6_user_id_consolidation.md)
 

@@ -1,4 +1,4 @@
-## Campaign Attribution
+## Campaign Attribution Method
 
 This Marketing Attribution block comes with first- and last-touch attribution based on campaigns associated with each session. In order to accomplish this, we've created two PDTs, each with a distinct purpose.
 
