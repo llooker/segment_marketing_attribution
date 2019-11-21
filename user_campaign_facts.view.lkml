@@ -9,9 +9,9 @@ view: user_campaign_facts {
         lag("session_id") OVER (partition by looker_visitor_id order by session_campaign_mapping."session_id" asc) as previous_session_id,
         first_value("start_time") OVER (partition by looker_visitor_id order by session_campaign_mapping."session_id" desc) as acquisition_time,
         first_value("context_campaign_name") OVER (partition by looker_visitor_id order by session_campaign_mapping."session_id" desc) as first_campaign,
-        COALESCE("context_campaign_name", lag("context_campaign_name") IGNORE NULLS OVER (partition by looker_visitor_id order by session_campaign_mapping."session_id" desc), "context_campaign_name") as previous_campaign,
-        first_value("context_campaign_source") OVER (partition by looker_visitor_id order by session_campaign_mapping."session_id" desc) as first_campaign_source,
-        COALESCE("context_campaign_source", lag("context_campaign_source") IGNORE NULLS OVER (partition by looker_visitor_id order by session_campaign_mapping."session_id" desc), "context_campaign_source") as previous_campaign_source
+        --COALESCE("context_campaign_name", lag("context_campaign_name") IGNORE NULLS OVER (partition by looker_visitor_id order by session_campaign_mapping."session_id" desc), "context_campaign_name") as previous_campaign,
+        first_value("context_campaign_source") OVER (partition by looker_visitor_id order by session_campaign_mapping."session_id" desc) as first_campaign_source
+       --COALESCE("context_campaign_source", lag("context_campaign_source") IGNORE NULLS OVER (partition by looker_visitor_id order by session_campaign_mapping."session_id" desc), "context_campaign_source") as previous_campaign_source
       FROM ${session_campaign_mapping.SQL_TABLE_NAME} AS session_campaign_mapping
 
       ORDER BY 1,2,3,4
@@ -29,7 +29,7 @@ view: user_campaign_facts {
     sql:
       CASE
         WHEN {% parameter attribution_method %} = 'First Touch' THEN ${first_campaign}
-        WHEN {% parameter attribution_method %} = 'Last Touch' THEN ${previous_campaign}
+        WHEN {% parameter attribution_method %} = 'Last Touch' THEN ${session_campaign_mapping.campaign_name}
         ELSE NULL
       END ;;
   }
@@ -40,7 +40,7 @@ view: user_campaign_facts {
     sql:
       CASE
         WHEN {% parameter attribution_method %} = 'First Touch' THEN ${first_campaign_source}
-        WHEN {% parameter attribution_method %} = 'Last Touch' THEN ${previous_campaign_source}
+        WHEN {% parameter attribution_method %} = 'Last Touch' THEN ${session_campaign_mapping.campaign_source}
         ELSE NULL
       END ;;
   }
@@ -81,7 +81,7 @@ view: user_campaign_facts {
     group_label: "Campaign"
     label: "Last Campaign"
     type: string
-    sql: COALESCE(INITCAP(${TABLE}."PREVIOUS_CAMPAIGN"),'Organic') ;;
+    sql: COALESCE(INITCAP(${session_campaign_mapping.campaign_name}),'Organic') ;;
   }
 
   dimension: first_campaign_source {
@@ -96,7 +96,7 @@ view: user_campaign_facts {
     label: "Last Campaign Source"
     drill_fields: [previous_campaign]
     type: string
-    sql: COALESCE(INITCAP(${TABLE}."PREVIOUS_CAMPAIGN_SOURCE"),'Organic') ;;
+    sql: COALESCE(INITCAP(${session_campaign_mapping.campaign_source}),'Organic') ;;
   }
 
   dimension: previous_session_id {
