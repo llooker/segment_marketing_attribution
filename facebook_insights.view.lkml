@@ -1,5 +1,5 @@
 view: facebook_insights {
-  sql_table_name: FACEBOOK_SANDBOX.insights ;;
+  sql_table_name: @{FACEBOOK_SCHEMA_NAME}.insights ;;
 
   dimension: id {
     primary_key: yes

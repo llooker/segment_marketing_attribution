@@ -1,5 +1,5 @@
 view: tracks {
-  sql_table_name: WEBSITE.TRACKS ;;
+  sql_table_name: @{SEGMENT_SCHEMA_NAME}.TRACKS ;;
 
   dimension: id {
     primary_key: yes

@@ -4,13 +4,13 @@ view: mapped_campaigns {
         id,
         name,
         'google' AS source
-      FROM GOOGLE.CAMPAIGNS
+      FROM @{GOOGLE_SCHEMA_NAME}.CAMPAIGNS
       UNION
       SELECT
         id,
         name,
         'facebook' AS source
-      FROM FACEBOOK_SANDBOX.CAMPAIGNS
+      FROM @{FACEBOOK_SCHEMA_NAME}.CAMPAIGNS
        ;;
   }
 

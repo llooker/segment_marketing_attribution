@@ -8,12 +8,12 @@ view: campaign_compare {
                 sum(i.impressions) as impresssions,
                 sum(i.clicks) as clicks,
                 'Facebook Ads'::text as source
-          from  FACEBOOK_SANDBOX.ads a
-          join  FACEBOOK_SANDBOX.insights i
+          from  @{FACEBOOK_SCHEMA_NAME}.ads a
+          join  @{FACEBOOK_SCHEMA_NAME}.insights i
             on  a.id = i.ad_id
-          join  FACEBOOK_SANDBOX.campaigns c
+          join  @{FACEBOOK_SCHEMA_NAME}.campaigns c
             on  a.campaign_id = c.id
-          join  FACEBOOK_SANDBOX.ad_sets ad
+          join  @{FACEBOOK_SCHEMA_NAME}.ad_sets ad
             on  a.adset_id = ad.id
       group by  1
       ),
@@ -24,12 +24,12 @@ view: campaign_compare {
           sum(apr.impressions) as impresssions,
           sum(apr.clicks) as clicks,
           'Google Ad Words'::text as source
-            from  GOOGLE.ads a
-            join  GOOGLE.ad_performance_reports apr
+            from  @{GOOGLE_SCHEMA_NAME}.ads a
+            join  @{GOOGLE_SCHEMA_NAME}.ad_performance_reports apr
               on  a.id = apr.ad_id
-            join  GOOGLE.ad_groups g
+            join  @{GOOGLE_SCHEMA_NAME}.ad_groups g
               on  a.ad_group_id = g.id
-            join  GOOGLE.campaigns c
+            join  @{GOOGLE_SCHEMA_NAME}.campaigns c
               on  g.campaign_id = c.id
         group by  1
       )

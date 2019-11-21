@@ -1,5 +1,5 @@
 view: pages {
-  sql_table_name: WEBSITE.PAGES ;;
+  sql_table_name: @{SEGMENT_SCHEMA_NAME}.PAGES ;;
 
   dimension: id {
     primary_key: yes

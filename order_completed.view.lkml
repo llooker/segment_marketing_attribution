@@ -1,5 +1,5 @@
 view: order_completed {
-  sql_table_name: WEBSITE.ORDER_COMPLETED ;;
+  sql_table_name: @{SEGMENT_SCHEMA_NAME}.ORDER_COMPLETED ;;
 
   dimension: id {
     primary_key: yes

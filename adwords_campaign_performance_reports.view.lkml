@@ -1,5 +1,5 @@
 view: adwords_campaign_performance_reports {
-  sql_table_name: GOOGLE.campaign_performance_reports ;;
+  sql_table_name: @{GOOGLE_SCHEMA_NAME}.campaign_performance_reports ;;
 
   dimension: id {
     primary_key: yes

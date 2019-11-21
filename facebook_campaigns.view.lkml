@@ -1,5 +1,5 @@
 view: facebook_campaigns {
-  sql_table_name: FACEBOOK_SANDBOX.campaigns ;;
+  sql_table_name: @{FACEBOOK_SCHEMA_NAME}.campaigns ;;
 
   dimension: id {
     primary_key: yes

@@ -7,7 +7,7 @@ view: daily_campaign_spend {
         'Google' AS source,
         adwords_campaign_performance_reports.date_start AS date,
         COALESCE(SUM((adwords_campaign_performance_reports.cost/1000000) ), 0) AS cost
-      FROM GOOGLE.campaign_performance_reports  AS adwords_campaign_performance_reports
+      FROM @{GOOGLE_SCHEMA_NAME}.campaign_performance_reports  AS adwords_campaign_performance_reports
 
       GROUP BY 1,2
 
@@ -17,7 +17,7 @@ view: daily_campaign_spend {
         'Facebook',
         facebook_insights.date_start,
         COALESCE(SUM(facebook_insights.spend ), 0)
-      FROM FACEBOOK_SANDBOX.insights  AS facebook_insights
+      FROM @{FACEBOOK_SCHEMA_NAME}.insights  AS facebook_insights
 
       GROUP BY 1,2
        ;;

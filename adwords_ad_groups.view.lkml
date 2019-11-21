@@ -1,5 +1,5 @@
 view: adwords_ad_groups {
-  sql_table_name: GOOGLE.ad_groups ;;
+  sql_table_name: @{GOOGLE_SCHEMA_NAME}.ad_groups ;;
 
   dimension: id {
     primary_key: yes

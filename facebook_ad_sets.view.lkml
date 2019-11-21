@@ -1,5 +1,5 @@
 view: facebook_ad_sets {
-  sql_table_name: FACEBOOK_SANDBOX.ad_sets ;;
+  sql_table_name: @{FACEBOOK_SCHEMA_NAME}.ad_sets ;;
 
   dimension: id {
     primary_key: yes

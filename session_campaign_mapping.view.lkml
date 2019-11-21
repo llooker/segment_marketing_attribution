@@ -11,13 +11,13 @@ view: session_campaign_mapping {
         SUM(order_completed.revenue) AS session_revenue,
         ROW_NUMBER() OVER (PARTITION BY event_facts.looker_visitor_id ORDER BY event_facts.session_id ASC) AS session_sequence_number
       FROM ${event_facts.SQL_TABLE_NAME} AS event_facts
-      LEFT JOIN WEBSITE.PAGES  AS pages ON event_facts.timestamp = pages.timestamp
+      LEFT JOIN @{SEGMENT_SCHEMA_NAME}.PAGES  AS pages ON event_facts.timestamp = pages.timestamp
             and event_facts.anonymous_id = pages.anonymous_id
 
       LEFT JOIN ${sessions_pg_trk.SQL_TABLE_NAME} AS sessions_pg_trk ON event_facts.session_id = sessions_pg_trk.session_id
         AND event_facts.timestamp = sessions_pg_trk.session_start_at
 
-      LEFT JOIN WEBSITE.ORDER_COMPLETED as order_completed
+      LEFT JOIN @{SEGMENT_SCHEMA_NAME}.ORDER_COMPLETED as order_completed
         ON event_facts.anonymous_id = order_completed.anonymous_id
         AND event_facts.timestamp = order_completed.timestamp
 

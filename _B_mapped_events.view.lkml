@@ -13,7 +13,7 @@ view: mapped_events {
           , NULL as campaign_name
           ,event as event
           ,'tracks' as event_source
-        from WEBSITE.TRACKS as t
+        from @{SEGMENT_SCHEMA_NAME}.TRACKS as t
         inner join ${page_aliases_mapping.SQL_TABLE_NAME} as a2v
         on a2v.alias = coalesce(t.user_id, t.anonymous_id)
 
@@ -28,7 +28,7 @@ view: mapped_events {
           , context_campaign_name as campaign_name
           , NULL as event
           ,'pages' as event_source
-        from WEBSITE.PAGES as t
+        from @{SEGMENT_SCHEMA_NAME}.PAGES as t
         inner join ${page_aliases_mapping.SQL_TABLE_NAME} as a2v
           on a2v.alias = coalesce(t.user_id, t.anonymous_id)
       ) as e
