@@ -18,13 +18,6 @@ In addition, there will be tables pulled from marketing channels to tie campaign
 * **Google Ads**: `campaign_performance_reports` - A table with daily, campaign-level performance metrics for Google Ads campaigns.
 * **Facebook Ads** : `insights` - A table with daily, ad-level performance metrics for Facebook Ads campaigns.
 
-## Should I use Views or Tables?
-Each of the tables listed above has a _view counterpart, which Segment includes to de-duplicate data and ensure that you are querying unique events. These are logical views, not materialized views, meaning they will execute at query time every time they are referenced. Because BigQuery bills based on the amount of data processed, Segment recommends that you set a destination table for de-duped data and query that table instead. For simplicity, this Block queries the _views, but depending on the volume of data this may have significant cost implications for your instance. To read more about best practices for reducing BigQuery costs, see Segment's [documentation](https://segment.com/docs/destinations/bigquery/#schema).
-
-**Note:** by default, views are setup to look at only the last 60 days, but this can be updated to whatever timeframe meets your needs by changing the view definition in BigQuery.
-
-
-
 
 [:point_right:](_4_initial_validation.md) Continue to [Initial Validation](_4_initial_validation.md)
 
