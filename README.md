@@ -16,3 +16,7 @@ Marketing Attribution Block by Segment takes event tracking data and ties each u
 #### In Looker
 * **Implementing the Base Event Analytics Block**: This Block is an extension of the Event Analytics Block, and specifically leverages sessionization built on the tracks and pages tables in Segment. You will therefore need at least tracks and pages in your database, and make sure to change the schema name in the `sql_table_name` parameter for each view referring to underlying tables. Please refer to the details [here] (https://github.com/llooker/segment_bigquery).
 * **Adjust Key Actions to Create a User Funnel**: How you will track a user's steps to conversion (e.g. Visit -> View Product -> Add to Cart -> Purchase) depends on what actions users are able to take. You will have to adjust the SQL query in the `_F_session_pg_track_facts` view to include `, sum(case when t2s.event = 'INSERT EVENT NAME HERE' then 1 else null end) as count_[event_name]`.
+
+[:point_right:](_1_block_overview.md) Continue to [Block Overview](_1_block_overview.md)
+
+[:house:](README.md) README [Table of Contents](README.md)
