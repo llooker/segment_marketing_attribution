@@ -6,6 +6,7 @@ An important part of the initial data validation is making sure the event data h
 1. Verify that any schemas that will be tied together have Anonymous IDs in Pages and Tracks that will map.
 1. Verify the events in Tracks (`tracks.event`) are as expected.
 1. Verify all entries in Pages have `context_campaign_source` and `context_campaign_name` for campaign tracking.
+1. Update Segment, Google, and Facebook data schema names in the project [manifest file](manifest.lkml)
 
 If you see any deviations from expected behavior, there may be some things that should be configured on the Segment end.
 
