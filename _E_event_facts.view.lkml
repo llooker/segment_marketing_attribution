@@ -52,6 +52,7 @@ view: event_facts {
   dimension: looker_visitor_id {
     type: string
     sql: ${TABLE}.looker_visitor_id ;;
+    tags: ["user_id"]
   }
 
   dimension: anonymous_id {

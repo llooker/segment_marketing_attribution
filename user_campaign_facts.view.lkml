@@ -53,6 +53,7 @@ view: user_campaign_facts {
   dimension: looker_visitor_id {
     type: string
     sql: ${TABLE}."LOOKER_VISITOR_ID" ;;
+    tags: ["user_id"]
   }
 
   dimension: session_id {

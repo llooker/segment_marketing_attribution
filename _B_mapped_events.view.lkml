@@ -41,6 +41,7 @@ view: mapped_events {
 
   dimension: looker_visitor_id {
     sql: ${TABLE}.looker_visitor_id ;;
+    tags: ["user_id"]
   }
 
   dimension: anonymous_id {

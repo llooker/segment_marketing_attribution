@@ -5,10 +5,10 @@ view: session_pg_trk_facts {
     sql: select s.session_id
         --, first_referrer
         , max(t2s.timestamp) as end_at
-        , count(case when t2s.event_source = 'tracks' then 1 else null end) as tracks_count
-        , sum(case when t2s.event = 'product_viewed' then 1 else null end) as cnt_product_viewed
-        , sum(case when t2s.event = 'product_added' then 1 else null end) as cnt_product_added
-        , sum(case when t2s.event = 'order_completed' then 1 else null end) as cnt_order_completed
+        , count(case when t2s.event_source = '@{EVENT_1}' then 1 else null end) as tracks_count
+        , sum(case when t2s.event = '@{EVENT_2}' then 1 else null end) as cnt_product_viewed
+        , sum(case when t2s.event = '@{EVENT_3}' then 1 else null end) as cnt_product_added
+        , sum(case when t2s.event = '@{EVENT_4}' then 1 else null end) as cnt_order_completed
       from ${sessions_pg_trk.SQL_TABLE_NAME} as s
         inner join ${event_facts.SQL_TABLE_NAME} as t2s
           on s.session_id = t2s.session_id

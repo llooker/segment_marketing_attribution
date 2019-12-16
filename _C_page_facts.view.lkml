@@ -34,6 +34,7 @@ FROM ${mapped_events.SQL_TABLE_NAME} AS e
     hidden: yes
     type: string
     sql: ${TABLE}.looker_visitor_id ;;
+    tags: ["user_id"]
   }
 
   dimension_group: timestamp {

@@ -21,6 +21,7 @@ GROUP BY 2,3
   dimension: looker_visitor_id {
     type: number
     sql: ${TABLE}.looker_visitor_id ;;
+    tags: ["user_id"]
   }
 
   dimension_group: start {

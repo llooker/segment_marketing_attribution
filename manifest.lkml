@@ -11,3 +11,19 @@ constant: FACEBOOK_SCHEMA_NAME {
 constant: GOOGLE_SCHEMA_NAME {
   value: "GOOGLE"
 }
+
+constant: EVENT_1 {
+  value: "tracks"
+}
+
+constant: EVENT_2 {
+  value: "product_viewed"
+}
+
+constant: EVENT_3 {
+  value: "product_added"
+}
+
+constant: EVENT_4 {
+  value: "order_completed"
+}

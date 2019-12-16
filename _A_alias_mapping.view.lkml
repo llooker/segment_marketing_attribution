@@ -61,6 +61,7 @@ view: page_aliases_mapping {
   # User ID
   dimension: looker_visitor_id {
     sql: ${TABLE}.looker_visitor_id ;;
+    tags: ["user_id"]
   }
 
   measure: count {

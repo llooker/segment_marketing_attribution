@@ -75,6 +75,7 @@ view: session_campaign_mapping {
   dimension: looker_visitor_id {
     type: string
     sql: ${TABLE}.looker_visitor_id ;;
+    tags: ["user_id"]
   }
 
   dimension: session_revenue {
