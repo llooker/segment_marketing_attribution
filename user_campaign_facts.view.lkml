@@ -57,12 +57,6 @@ view: user_campaign_facts {
     tags: ["user_id"]
   }
 
-  dimension: test {
-    type: string
-    tags: ["user_id"]
-    sql: 'pbnjake' ;;
-  }
-
   dimension: session_id {
     group_label: "Session"
     type: string
