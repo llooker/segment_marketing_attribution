@@ -1,5 +1,6 @@
 view: user_campaign_facts {
   derived_table: {
+    sql_trigger_value: select count(*) from ${mapped_events.SQL_TABLE_NAME} ;;
     sql:
       SELECT
         session_campaign_mapping.looker_visitor_id  AS looker_visitor_id,
