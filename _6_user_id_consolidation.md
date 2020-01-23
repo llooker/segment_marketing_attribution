@@ -4,6 +4,7 @@ The idea behind finding a universal user id is in this [Segment blog post](), bu
 
 1. Anonymous Id is localized to the visit, but will remain consistent across that visit
 1. User Id is populated only after the user authenticates (i.e. signs into a site) but should remain consistent across distinct visits UNLESS the user id changes during a visit. In this case the anonymous id would remain consistent across the change, so we can still map the user to the same identity.
+1. User Ids are not required to make this block work. If there are no values in User Id, the block will simply default to using Anonymous Id.
 
 
 Anon ID | User ID | Event ID | Link ID
