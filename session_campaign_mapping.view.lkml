@@ -137,7 +137,7 @@ view: session_campaign_mapping {
     type: count_distinct
     sql: ${session_pg_trk_facts.session_id} ;;
     filters: {
-      field: user_campaign_facts.previous_campaign_source
+      field: user_campaign_facts.attribution_channel
       value: "Facebook"
     }
     filters: {
@@ -152,7 +152,7 @@ view: session_campaign_mapping {
     type: count_distinct
     sql: ${session_pg_trk_facts.session_id} ;;
     filters: {
-      field: user_campaign_facts.previous_campaign_source
+      field: user_campaign_facts.attribution_channel
       value: "Google"
     }
     filters: {
@@ -167,7 +167,7 @@ view: session_campaign_mapping {
     type: count_distinct
     sql: ${session_pg_trk_facts.session_id} ;;
     filters: {
-      field: user_campaign_facts.previous_campaign_source
+      field: user_campaign_facts.attribution_channel
       value: "email"
     }
     filters: {
