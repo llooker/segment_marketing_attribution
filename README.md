@@ -3,13 +3,27 @@ Marketing Attribution Block by Segment takes event tracking data and ties each u
 
 **Note**: This Block is an extension of the [Event Analytics by Segment Block](https://looker.com/platform/blocks/source/event-analytics-by-segment). It specifically uses the ["Pages and Tracks"](https://github.com/llooker/segment_bigquery/blob/master/_5_applying_the_segment_block.md) version of the Block. Please refer to details in the [Event Analytics Block entry](https://github.com/llooker/segment_bigquery).
 
-### Block Structure (Explores)
-* **Campaign Attribution**: The Campaign Attribution explore takes four distinct views - sessions, events, users, and spend - to provide a holistic view on campaign performance. This explore is an extension of the Event Analytics by Segment block, and is based on both the standard Segment web tracking schema (tracks, pages, etc.), as well as Facebook Ads and Google AdWords data piped in through Segment.
+### What's New?
+This Marketing Attribution Block adds the ability to organize and analyze conversions as they relate to specific campaigns and marketing channels. This is made possible by adding one model file, three new View files, and one dashboard file:
 
-### Block Structure (PDTs)
-* **session_campaign_mapping**: This PDT takes each session and assigns it a campaign and channel through which the session was entered, along with total revenue during each session.
-* **user_campaign_facts**: This PDT associates each visitor ID with a visitor's acquisition channel and campaign (i.e. first touch), and the campaign / channel that triggered any given user session's previous session (i.e. last touch).
-* **daily_campaign_spend**: This PDT standardizes campaign cost across channels (Google AdWords and Facebook Ads by default) as total spend by date.
+* marketing_attribution.model.lkml
+* session_campaign_mapping.view.lkml
+* user_campaign_mapping.view.lkml
+* daily_campaign_spend.view.lkml
+* 1_revenue_attribution.dashboard.lookml
+
+An overview of each file is listed in the **Block Structure** section below.
+
+### Block Structure (New Explore)
+* **Campaign Attribution**: The Campaign Attribution explore takes four distinct views - sessions, events, users, and spend - to provide a holistic view on campaign performance. This explore is an extension of the Event Analytics by Segment block, and is based on both the standard Segment web tracking schema (tracks, pages, etc.), as well as Facebook Ads and Google AdWords data piped in through Segment. This is included in the **marketing_attribution.model.lkml** model file.
+
+### Block Structure (New PDTs)
+* **Session Campaign Mapping**: This PDT takes each session and assigns it a campaign and channel through which the session was entered, along with total revenue during each session. **session_campaign_mapping.view.lkml** is the relevant view file.
+* **User Campaign Facts**: This PDT associates each visitor ID with a visitor's acquisition channel and campaign (i.e. first touch), and the campaign / channel that triggered any given user session's previous session (i.e. last touch). **user_campaign_mapping.view.lkml** is the relevant view file.
+* **Daily Campaign Spend**: This PDT standardizes campaign cost across channels (Google AdWords and Facebook Ads by default) as total spend by date. **daily_campaign_spend.view.lkml** is the relevant view file.
+
+### Block Structure (New Dashboard)
+* **Revenue Attribution Dashboard**: This dashboard provides users with the analyses necessary to take digital marketing to the next level. Key insights include which channels bring in the most conversion, and what campaigns are most effective at nudging users to take desired actions. This is included in the **1_revenue_attribution.dashboard.lookml** file.
 
 ### Required Customization
 
